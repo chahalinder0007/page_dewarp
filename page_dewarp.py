@@ -838,20 +838,18 @@ def remap_image(name, img, small, page_dims, params):
     return threshfile
 
 
-def main():
-
-    if len(sys.argv) < 2:
-        # print 'usage:', sys.argv[0], 'IMAGE1 [IMAGE2 ...]'
-        sys.exit(0)
+def main(file_paths): #file paths is a list that gives values out
 
     if DEBUG_LEVEL > 0 and DEBUG_OUTPUT != 'file':
         cv2.namedWindow(WINDOW_NAME)
 
     outfiles = []
 
-    for imgfile in sys.argv[1:]:
+    # import ipdb;ipdb.set_trace()
+    for imgfile in file_paths:
 
         img = cv2.imread(imgfile)
+        
         small = resize_to_screen(img)
         basename = os.path.basename(imgfile)
         name, _ = os.path.splitext(basename)
@@ -904,6 +902,8 @@ def main():
 
         outfiles.append(outfile)
 
+        return 
+
     #     print '  wrote', outfile
     #     print
 
@@ -912,4 +912,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main()
+    main(sys.argv)
