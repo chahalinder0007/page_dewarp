@@ -778,7 +778,7 @@ def get_page_dims(corners, rough_dims, params):
     return dims
 
 
-def remap_image(name, img, small, page_dims, params):
+def remap_image(name, img, small, page_dims, params,dir_to_save):
 
     height = 0.5 * page_dims[1] * OUTPUT_ZOOM * img.shape[0]
     height = round_nearest_multiple(height, REMAP_DECIMATE)
@@ -825,7 +825,7 @@ def remap_image(name, img, small, page_dims, params):
     pil_image = Image.fromarray(thresh)
     pil_image = pil_image.convert('1')
 
-    threshfile = name + '_thresh.png'
+    threshfile = dir_to_save + "/" + name + '_thresh.png'
     pil_image.save(threshfile, dpi=(OUTPUT_DPI, OUTPUT_DPI))
 
     if DEBUG_LEVEL >= 1:
@@ -838,8 +838,8 @@ def remap_image(name, img, small, page_dims, params):
     return threshfile
 
 
-def main(file_paths): #file paths is a list that gives values out
-
+def main(file_paths,dir_to_save = "thresh"): #file paths is a list that gives values out
+    os.mkdirs(dir_to_save,exists = True)
     if DEBUG_LEVEL > 0 and DEBUG_OUTPUT != 'file':
         cv2.namedWindow(WINDOW_NAME)
 
@@ -898,7 +898,7 @@ def main(file_paths): #file paths is a list that gives values out
 
         page_dims = get_page_dims(corners, rough_dims, params)
 
-        outfile = remap_image(name, img, small, page_dims, params)
+        outfile = remap_image(name, img, small, page_dims, params,dir_to_save)
 
         outfiles.append(outfile)
 
