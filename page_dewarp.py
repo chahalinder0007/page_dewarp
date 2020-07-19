@@ -839,7 +839,7 @@ def remap_image(name, img, small, page_dims, params,dir_to_save):
 
 
 def main(file_paths,dir_to_save = "thresh"): #file paths is a list that gives values out
-    os.mkdirs(dir_to_save,exists = True)
+    os.makedirs(dir_to_save,exist_ok = True)
     if DEBUG_LEVEL > 0 and DEBUG_OUTPUT != 'file':
         cv2.namedWindow(WINDOW_NAME)
 
